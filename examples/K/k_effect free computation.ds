@@ -1,0 +1,20 @@
+// examples/K/k_effect free computation.ds
+// Demonstrates a purely deterministic K-regime computation with no effects.
+// The only observable outcome is the return value.
+
+forge Examples {
+
+    proc K::effect_free_computation() -> i32 {
+        // Deterministic inputs
+        let a = 9;
+        let b = 6;
+
+        // Pure computation (no observe, emit, or seal)
+        let diff = a - b;        // 3
+        let square = diff * diff; // 9
+
+        // No effects occur in this process
+        return square;
+    }
+
+}
