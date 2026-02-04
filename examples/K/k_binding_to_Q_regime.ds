@@ -1,0 +1,58 @@
+// examples/K/k_binding to Q regime.ds
+// Demonstrates K-regime orchestration of a Q-regime linear process
+// via an explicit bind + contract.
+//
+// This file contains:
+//  - a Q process that consumes a linear state and returns a transformed linear state
+//  - a K process that prepares an input and requests the Q transformation
+//  - an explicit binding that governs the cross-regime interaction
+//
+// Note: DPL v0.1 restricts Q-regime to linear usage. This example keeps the Q
+// transformation minimal and returns the linear value without copying.
+
+forge Examples {
+
+    // -----------------------------
+    // Q-regime: linear state type
+    // -----------------------------
+    shape QState {
+        id: i64;
+    }
+
+    // Q-regime process: consumes a linear QState and returns a linear QState.
+    proc Q::tag(q: QState) -> QState linear {
+        // Minimal deterministic "transform" represented by returning the same state.
+        // In later versions, this would represent a unitary or controlled operation.
+        return q;
+    }
+
+    // --------------------------------
+    // K-regime: orchestrate Q execution
+    // --------------------------------
+    proc K::request_q_transform() -> i64 {
+        // Prepare an input state descriptor (treated as a value in K).
+        // The Q-regime process will treat its parameter linearly.
+        let q0 = QState { id: 101 };
+
+        // Cross-regime invocation is mediated by binding (declared below).
+        let q1 = tag(q0);
+
+        // Emit an external observable marker that the transform completed.
+        // The observable value is classical (the id), not the linear QState itself.
+        emit q1.id;
+
+        // Return a classical value derived from the Q result.
+        return q1.id;
+    }
+
+    // -----------------------
+    // Cross-regime binding
+    // -----------------------
+    bind K::request_q_transform -> Q::tag
+    contract {
+        latency_us < 5000;
+        effects_allowed == true;
+        linearity_enforced == true;
+    }
+
+}
