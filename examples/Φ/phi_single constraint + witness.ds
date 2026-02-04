@@ -1,0 +1,32 @@
+// examples/Φ/phi_single constraint + witness.ds
+// Φ-Regime Example 1: Single constraint + witness
+//
+// Demonstrates the foundational Φ-regime pattern:
+//  - computation is defined by constraints, not stepwise execution,
+//  - admissibility is explicit,
+//  - a witness justifies validity,
+//  - no effects occur unless justified.
+
+forge Examples {
+
+    shape Candidate {
+        x: i32;
+    }
+
+    shape PhiResult {
+        value: i32;
+        ok: bool;
+    }
+
+    proc Φ::single_constraint_witness(c: Candidate) -> PhiResult {
+        // Declare the admissibility condition
+        constrain c.x > 0;
+
+        // Explicitly construct an admissibility witness
+        prove w from c;
+
+        // Return a result whose validity is justified by the witness
+        return PhiResult { value: c.x, ok: true };
+    }
+
+}
