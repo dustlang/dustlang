@@ -1,0 +1,27 @@
+// examples/Φ/phi_witness gated effect.ds
+// Φ-Regime Example 4: Witness-gated effect
+//
+// Demonstrates that effects in Φ-regime are permitted only when admissibility
+// is established and a witness exists to justify the action.
+
+forge Examples {
+
+    shape Candidate {
+        x: i32;
+    }
+
+    proc Φ::witness_gated_effect(c: Candidate) -> i32 {
+        // Admissibility condition
+        constrain c.x > 0;
+
+        // Construct the admissibility witness
+        prove w from c;
+
+        // Effect is justified by the existence of the witness
+        seal w;
+
+        // Return a deterministic value governed by admissibility
+        return c.x;
+    }
+
+}
