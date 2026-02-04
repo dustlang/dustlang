@@ -235,6 +235,16 @@ No token may span beyond the end of input.
 
 ---
 
+### 2.13 Source File Extension
+
+The default file extension for Dust Programming Language source files is:
+
+Implementations SHOULD recognize `.ds` files as DPL source files by default.
+
+Implementations MAY support additional extensions for tooling or experimentation, but such extensions MUST NOT replace or supersede `.ds` as the canonical extension.
+
+---
+
 © 2026 Dust LLC
 
 
