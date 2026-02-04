@@ -1,4 +1,3 @@
-
 # Dust Programming Language (DPL)
 
 **Version:** v0.1 (Specification in Progress)  
@@ -44,34 +43,34 @@ DPL is built around a small number of foundational ideas:
 ## Repository Structure
 
 .
-├── README.md                 # This file
-├── LICENSE                   # Dust Open Source License (DOSL)
-├── spec/
-├── README.md                     # Spec overview + navigation
-├── dpl-spec-v0.1.md              # Front matter + master TOC only
-├── 01-introduction.md            # §1 Introduction
-├── 02-lexical-structure.md       # §2 Lexical Structure
-├── 03-grammar.md                 # §3 Grammar
-├── 04-regime-model.md            # §4 Regime Model
-├── 05-type-system.md             # §5 Type System
-├── 06-effects.md                 # §6 Effects & Irreversibility
-├── 07-constraints.md             # §7 Constraints & Admissibility
-├── 08-processes.md               # §8 Processes & Execution
-├── 09-time-concurrency.md        # §9 Time & Concurrency
-├── 10-binding-contracts.md       # §10 Binding & Contracts
-├── 11-errors.md                  # §11 Error & Failure Model
-├── 12-dir.md                     # §12 Dust Intermediate Representation
-├── 13-conformance.md             # §13 Conformance
-├── 14-versioning.md              # §14 Versioning & Evolution
-├── 15-security.md                # §15 Security & Safety
-├── glossary.md                   # Shared terminology
-├── rationale.md                  # Non-normative design rationale
-├── changelog.md                  # Spec-level change log
-├── notes/
-│   ├── design-rationale.md   # Motivations and non-goals
-│   └── future-work.md        # Explicitly deferred features
-└── examples/
-└── (to be added)
+├── README.md                 # This file\
+├── LICENSE                   # Dust Open Source License (DOSL)\
+├── spec/\
+├── README.md                     # Spec overview + navigation\
+├── dpl-spec-v0.1.md              # Front matter + master TOC only\
+├── 01-introduction.md            # §1 Introduction\
+├── 02-lexical-structure.md       # §2 Lexical Structure\
+├── 03-grammar.md                 # §3 Grammar\
+├── 04-regime-model.md            # §4 Regime Model\
+├── 05-type-system.md             # §5 Type System\
+├── 06-effects.md                 # §6 Effects & Irreversibility\
+├── 07-constraints.md             # §7 Constraints & Admissibility\
+├── 08-processes.md               # §8 Processes & Execution\
+├── 09-time-concurrency.md        # §9 Time & Concurrency\
+├── 10-binding-contracts.md       # §10 Binding & Contracts\
+├── 11-errors.md                  # §11 Error & Failure Model\
+├── 12-dir.md                     # §12 Dust Intermediate Representation\
+├── 13-conformance.md             # §13 Conformance\
+├── 14-versioning.md              # §14 Versioning & Evolution\
+├── 15-security.md                # §15 Security & Safety\
+├── glossary.md                   # Shared terminology\
+├── rationale.md                  # Non-normative design rationale\
+├── changelog.md                  # Spec-level change log\
+├── notes/\
+│   ├── design-rationale.md   # Motivations and non-goals\
+│   └── future-work.md        # Explicitly deferred features\
+└── examples/\
+└── (to be added)\
 
 > **Note:** The specification is the authoritative definition of the language.  
 > No compiler or implementation defines DPL behavior.
