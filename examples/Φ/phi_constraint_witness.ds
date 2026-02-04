@@ -1,0 +1,21 @@
+/*
+Notes: This demonstrates:
+	* constraints are declarative (constrain)
+	* admissibility is explicit (prove …)
+	*an irreversible action is justified (seal ok)
+*/
+
+forge Examples {
+
+    shape Candidate {
+        x: i32;
+    }
+
+    proc Φ::solve_and_seal(c: Candidate) -> i32 {
+        constrain c.x > 0;
+        prove ok from c;
+        seal ok;
+        return c.x;
+    }
+
+}
