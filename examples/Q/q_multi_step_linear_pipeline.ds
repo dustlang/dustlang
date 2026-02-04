@@ -1,0 +1,42 @@
+// examples/Q/q_multi step linear pipeline.ds
+// Q-Regime Example 8: Multi-step linear pipeline
+//
+// Demonstrates a chained sequence of linear transformations where:
+//  - each step consumes a linear value exactly once,
+//  - produces a new linear value,
+//  - no copying or discarding occurs,
+//  - no effects are performed.
+//
+// This example closes the Q-regime example set by showing correct linear
+// usage across multiple steps.
+
+forge Examples {
+
+    shape QState {
+        id: i64;
+    }
+
+    proc Q::step_add_one(q: QState) -> QState linear {
+        let new_id = q.id + 1;
+        return QState { id: new_id };
+    }
+
+    proc Q::step_double(q: QState) -> QState linear {
+        let new_id = q.id * 2;
+        return QState { id: new_id };
+    }
+
+    proc Q::step_add_ten(q: QState) -> QState linear {
+        let new_id = q.id + 10;
+        return QState { id: new_id };
+    }
+
+    // Pipeline: q0 -> add_one -> double -> add_ten
+    proc Q::linear_pipeline(q0: QState) -> QState linear {
+        let q1 = step_add_one(q0);
+        let q2 = step_double(q1);
+        let q3 = step_add_ten(q2);
+        return q3;
+    }
+
+}
