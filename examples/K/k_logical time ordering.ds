@@ -1,0 +1,22 @@
+// examples/K/k_logical time ordering.ds
+// Demonstrates logical time ordering via explicit sequential evaluation.
+// No physical time is referenced; ordering is defined by program order.
+
+forge Examples {
+
+    proc K::logical_time_ordering() -> i32 {
+        // Logical time marker values
+        let t0 = 100;
+        let t1 = t0 + 1;
+        let t2 = t1 + 1;
+
+        // Effects occur at well-defined points in logical time (program order).
+        emit t0;
+        emit t1;
+        emit t2;
+
+        // Deterministic return of the final logical marker
+        return t2;
+    }
+
+}
