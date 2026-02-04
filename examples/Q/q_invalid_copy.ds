@@ -1,0 +1,29 @@
+// examples/Q/q_invalid copy.ds
+// Q-Regime Example 3: Invalid copy (commented, non-compiling)
+//
+// Demonstrates a forbidden operation in Q-regime:
+//  - attempting to use a linear value more than once.
+// This example is intentionally non-compiling and is kept fully commented
+// to preserve repository buildability while documenting a hard rule.
+//
+// IMPORTANT: This is a reference example of what MUST be rejected by any
+// conforming DPL compiler (linearity violation).
+
+/*
+forge Examples {
+
+    shape QState {
+        id: i64;
+    }
+
+    proc Q::invalid_copy(q: QState) -> i64 linear {
+        // ❌ ILLEGAL: using q twice violates linearity.
+
+        let a = q.id;     // first use of q
+        let b = q.id;     // second use of q (forbidden)
+
+        return a + b;
+    }
+
+}
+*/
