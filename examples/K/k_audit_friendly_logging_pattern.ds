@@ -1,0 +1,44 @@
+// examples/K/k_audit friendly logging pattern.ds
+// Demonstrates an audit-friendly effect pattern in the K (classical) regime.
+//
+// Goals:
+//  - All external observability occurs through explicit, ordered effects.
+//  - Logs are structured as begin -> data -> end markers.
+//  - A final seal commits the audit record boundary.
+//
+// Note: DPL v0.1 does not yet define strings or structured log primitives formally.
+// This example treats emitted payloads as external audit records and relies on
+// ordering + sealing semantics for auditability.
+
+forge Examples {
+
+    proc K::audit_friendly_logging_pattern() uses Console(device="stdout") -> i32 {
+        // Deterministic computation whose provenance is to be audited
+        let job_id = 1001;
+        let a = 9;
+        let b = 6;
+        let result = (a * b) + job_id; // 54 + 1001 = 1055
+
+        // --- AUDIT START (ordered, explicit) ---
+        emit "AUDIT:BEGIN";
+        emit job_id;
+
+        // Record deterministic inputs
+        emit "INPUT:a";
+        emit a;
+
+        emit "INPUT:b";
+        emit b;
+
+        // Record deterministic output
+        emit "OUTPUT:result";
+        emit result;
+
+        // Mark completion and commit an immutable boundary
+        emit "AUDIT:END";
+        seal job_id;
+
+        return result;
+    }
+
+}
