@@ -1,0 +1,68 @@
+// examples/K/k_binding to Φ regime.ds
+// Demonstrates K-regime orchestration of a Φ-regime admissibility process
+// via an explicit bind + contract.
+//
+// This file contains:
+//  - a K process that requests a constrained solution from Φ
+//  - a Φ process that declares a constraint and produces an admissibility witness
+//  - an explicit binding that governs the cross-regime interaction
+
+forge Examples {
+
+    // -----------------------------
+    // Φ-regime: constraint + witness
+    // -----------------------------
+    shape Candidate {
+        x: i32;
+    }
+
+    shape PhiResult {
+        value: i32;
+        ok: bool;
+    }
+
+    proc Φ::positive_candidate(c: Candidate) -> PhiResult {
+        // Admissibility condition
+        constrain c.x > 0;
+
+        // Witness construction (explicit)
+        prove w from c;
+
+        // Seal the witness to mark an irreversible commitment point
+        // (for example, an immutable audit record of admissibility).
+        seal w;
+
+        // Return a classical-shaped result plus a flag
+        let r = c.x;
+        return PhiResult { value: r, ok: true };
+    }
+
+    // --------------------------------
+    // K-regime: orchestrate Φ resolution
+    // --------------------------------
+    proc K::request_admissible_value() -> i32 {
+        // Prepare an input candidate
+        let c = Candidate { x: 7 };
+
+        // Cross-regime invocation is mediated by binding (declared below).
+        // This call is permitted because K::request_admissible_value is bound
+        // to Φ::positive_candidate by an explicit bind declaration.
+        let out = positive_candidate(c);
+
+        // Explicit effect in K after Φ admissibility has been established
+        emit out.value;
+
+        return out.value;
+    }
+
+    // -----------------------
+    // Cross-regime binding
+    // -----------------------
+    bind K::request_admissible_value -> Φ::positive_candidate
+    contract {
+        latency_us < 5000;
+        witness_transfer == true;
+        effects_allowed == true;
+    }
+
+}
