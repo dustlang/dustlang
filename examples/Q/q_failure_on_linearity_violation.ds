@@ -1,0 +1,33 @@
+// examples/Q/q_failure on linearity violation.ds
+// Q-Regime Example 7: Failure on linearity violation
+//
+// Demonstrates a *hard* linearity violation that MUST be rejected by the compiler.
+// This example is intentionally non-compiling and is fully commented out.
+//
+// Purpose:
+//  - Reinforces that linearity violations are detected statically.
+//  - Shows that no runtime failure or effect is possible because the program
+//    is invalid and must not be executed.
+//
+// This example differs from "invalid copy" by showing *implicit discard*
+// rather than explicit duplication.
+
+/*
+forge Examples {
+
+    shape QState {
+        id: i64;
+    }
+
+    proc Q::discard_linear_value(q: QState) -> i64 linear {
+        // ❌ ILLEGAL: q is never consumed, returned, or transformed.
+        // This implicit discard violates linearity rules.
+
+        let x = 42;
+
+        // Returning a classical value while abandoning the linear resource is forbidden.
+        return x;
+    }
+
+}
+*/
