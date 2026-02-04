@@ -1,0 +1,15 @@
+/*
+Notes: This demonstrates the linearity rule: q is used exactly once and returned. No copying, no discarding.
+*/
+
+forge Examples {
+
+    shape QState {
+        id: i64;
+    }
+
+    proc Q::pass_through(q: QState) -> QState linear {
+        return q;
+    }
+
+}
