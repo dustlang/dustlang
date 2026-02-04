@@ -1,0 +1,33 @@
+// examples/Φ/phi_deterministic selection.ds
+// Φ-Regime Example 7: Deterministic selection among admissible configurations
+//
+// Demonstrates that when multiple configurations satisfy the constraints,
+// the Φ-regime produces a deterministic selection according to
+// specification-defined rules (not nondeterminism or randomness).
+
+forge Examples {
+
+    shape Candidate {
+        x: i32;
+    }
+
+    shape Selection {
+        chosen: i32;
+        ok: bool;
+    }
+
+    proc Φ::deterministic_selection(c: Candidate) -> Selection {
+        // Admissibility region: multiple values of x are allowed
+        constrain c.x >= 10;
+        constrain c.x <= 20;
+
+        // Construct admissibility witness
+        prove w from c;
+
+        // Deterministic selection rule:
+        // the provided candidate is accepted as-is once admissible.
+        // No probabilistic choice or search occurs.
+        return Selection { chosen: c.x, ok: true };
+    }
+
+}
