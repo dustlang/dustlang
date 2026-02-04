@@ -1,0 +1,22 @@
+// examples/K/k_ordered effects.ds
+// Demonstrates that effects are explicit and occur strictly in program order.
+// This example emits three ordered markers and returns a deterministic value.
+
+forge Examples {
+
+    proc K::ordered_effects() -> i32 {
+        // Deterministic setup
+        let x = 7;
+        let y = 5;
+        let z = (x * y) + (x - y); // (35) + (2) = 37
+
+        // Effects MUST occur in this exact order
+        emit "EFFECT:1-BEGIN";
+        emit z;
+        emit "EFFECT:3-END";
+
+        // Deterministic return
+        return z;
+    }
+
+}
