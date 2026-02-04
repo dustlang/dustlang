@@ -1,0 +1,28 @@
+// examples/Q/q_observe measurement.ds
+// Q-Regime Example 4: Observe / measurement consuming state
+//
+// Demonstrates explicit measurement semantics in Q-regime using `observe`.
+// Key points:
+//  - The QState is linear and must be consumed exactly once.
+//  - `observe` is an explicit irreversible effect.
+//  - After measurement, the program produces a classical value (i64) to return.
+//  - No further use of the linear state occurs after observation.
+
+forge Examples {
+
+    shape QState {
+        id: i64;
+    }
+
+    // A minimal "measurement" that observes the linear state and returns a
+    // classical outcome. The observation is represented explicitly by `observe`.
+    proc Q::measure_id(q: QState) -> i64 linear {
+        // Measurement is an explicit effect
+        observe q;
+
+        // After observing, we return a classical value derived from the state.
+        // The linear state `q` is not used again.
+        return q.id;
+    }
+
+}
