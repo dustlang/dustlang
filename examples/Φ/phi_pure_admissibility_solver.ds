@@ -1,0 +1,36 @@
+// examples/Φ/phi_pure admissibility solver.ds
+// Φ-Regime Example 6: Φ-only pure admissibility solver
+//
+// Demonstrates a Φ-regime process that:
+//  - defines admissibility through constraints,
+//  - constructs a witness,
+//  - returns a deterministic derived value,
+//  - performs no effects (pure with respect to the external world).
+
+forge Examples {
+
+    shape Candidate {
+        x: i32;
+        y: i32;
+    }
+
+    shape Solution {
+        total: i32;
+        ok: bool;
+    }
+
+    proc Φ::pure_admissibility_solver(c: Candidate) -> Solution {
+        // Define admissibility region
+        constrain c.x >= 0;
+        constrain c.y >= 0;
+        constrain (c.x + c.y) <= 100;
+
+        // Construct admissibility witness
+        prove w from c;
+
+        // Deterministic derived value (no effects)
+        let t = c.x + c.y;
+        return Solution { total: t, ok: true };
+    }
+
+}
