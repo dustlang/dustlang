@@ -1,0 +1,26 @@
+// examples/K/k_failure before effect.ds
+// Demonstrates the "fail before effect" principle.
+// If a required resource is unavailable, execution must not proceed and no effects occur.
+
+forge Examples {
+
+    // This process declares a required resource.
+    // If the resource cannot be acquired, the process MUST fail deterministically
+    // before any emit occurs.
+    proc K::failure_before_effect() uses Console(device="stdout") -> i32 {
+
+        // Deterministic computation that would be emitted if execution proceeds
+        let a = 20;
+        let b = 2;
+        let result = a / b; // 10
+
+        // If resource acquisition fails, this effect MUST NOT occur.
+        emit "READY-TO-EMIT";
+
+        // If the emit above occurs, then execution has proceeded correctly.
+        emit result;
+
+        return result;
+    }
+
+}
