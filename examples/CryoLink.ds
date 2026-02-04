@@ -1,0 +1,37 @@
+forge CryoLink {
+
+  shape Vec3 { x: f64, y: f64, z: f64 }
+
+  proc K::stabilize(target: Vec3) -> Vec3
+    uses clock(1kHz), io(motor_bus)
+  {
+    let e = target - sense::position()
+    drive::motors( pid(e) )
+    return sense::position()
+  }
+
+  proc Q::estimate_phase() -> qbit[6]
+    uses qpu(iontrap), budget(shots=2000)
+    linear
+  {
+    let r = q::register(6)
+    q::entangle(r)
+    q::encode(r, basis: "phase")
+    return r
+  }
+
+  proc Φ::admit(field: ΦField) -> ΦWitness
+    uses admissibility(global), tolerance(1e-9)
+  {
+    constrain field has no_inconsistent_loops
+    constrain field respects boundary("lab_frame")
+    prove witness from field
+    return witness
+  }
+
+  bind K::stabilize -> Q::estimate_phase
+    contract { latency < 2ms, jitter < 100us }
+
+  bind Q::estimate_phase -> Φ::admit
+    contract { observation = "non-signaling", record = "sealed" }
+}
