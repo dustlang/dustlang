@@ -1,0 +1,20 @@
+// examples/Q/q_linear pass-through.ds
+// Q-Regime Example 1: Linear pass-through (identity)
+//
+// Demonstrates the foundational Q-regime rule:
+//  - The input is treated as a linear resource.
+//  - It is used exactly once by returning it.
+//  - No copying, no discarding, no effects.
+
+forge Examples {
+
+    shape QState {
+        id: i64;
+    }
+
+    proc Q::linear_pass_through(q: QState) -> QState linear {
+        // The linear value is consumed exactly once by being returned.
+        return q;
+    }
+
+}
