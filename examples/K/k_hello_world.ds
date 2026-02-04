@@ -1,0 +1,12 @@
+/*
+Notes: emit is the explicit output effect. The string literal is treated as an external literal payload in this reference example (string primitives are not yet fully specified in v0.1; this is a canonical placeholder used for examples).
+*/
+
+forge Examples {
+
+    proc K::hello_world() {
+        emit "Hello, World";
+        return 0;
+    }
+
+}
