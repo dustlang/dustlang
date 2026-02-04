@@ -1,0 +1,55 @@
+// examples/Q/q_binding Q to K measurement export.ds
+// Q-Regime Example 6: Binding Q -> K (measurement export)
+//
+// Demonstrates exporting a classical measurement result from Q-regime to K-regime
+// through an explicit bind + contract.
+//
+// This file contains:
+//  - a Q process that performs an explicit observation and returns a classical value
+//  - a K process that receives and emits the classical result
+//  - an explicit binding that governs the cross-regime interaction
+
+forge Examples {
+
+    // -----------------------------
+    // Q-regime: linear state type
+    // -----------------------------
+    shape QState {
+        id: i64;
+    }
+
+    // Q-regime measurement: consumes a linear state, performs an explicit observe,
+    // and returns a classical value.
+    proc Q::measure_id(q: QState) -> i64 linear {
+        observe q;
+        return q.id;
+    }
+
+    // -----------------------------
+    // K-regime: consume measurement
+    // -----------------------------
+    proc K::consume_measurement() uses Console(device="stdout") -> i64 {
+        // Prepare an input state descriptor (treated as a value in K).
+        let q0 = QState { id: 404 };
+
+        // Cross-regime call is mediated by binding (declared below).
+        let m = measure_id(q0);
+
+        // Explicit classical effect after receiving the measurement result
+        emit "MEASUREMENT:ID";
+        emit m;
+
+        return m;
+    }
+
+    // -----------------------
+    // Cross-regime binding
+    // -----------------------
+    bind Q::measure_id -> K::consume_measurement
+    contract {
+        witness_transfer == false;
+        effects_allowed == true;
+        latency_us < 5000;
+    }
+
+}
