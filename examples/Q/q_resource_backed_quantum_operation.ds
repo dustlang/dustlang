@@ -1,0 +1,33 @@
+// examples/Q/q_resource backed quantum operation.ds
+// Q-Regime Example 5: Resource-backed quantum operation
+//
+// Demonstrates a Q-regime process that:
+//  - requires an explicitly declared external resource (`uses`),
+//  - consumes a linear input exactly once,
+//  - produces a linear output,
+//  - performs no hidden effects.
+//
+// This models a quantum operation that depends on constrained hardware
+// (e.g., a device, channel, or calibrated apparatus).
+
+forge Examples {
+
+    shape QState {
+        id: i64;
+    }
+
+    // The resource declaration is explicit. If the resource is unavailable,
+    // execution MUST fail deterministically before any operation proceeds.
+    proc Q::resource_backed_transform(q: QState)
+        uses QuantumDevice(kind="simulator", calibrated=true)
+        -> QState
+        linear
+    {
+        // Deterministic, linear-safe transform
+        let new_id = q.id * 2;
+
+        // Consume q exactly once by producing a new linear state
+        return QState { id: new_id };
+    }
+
+}
