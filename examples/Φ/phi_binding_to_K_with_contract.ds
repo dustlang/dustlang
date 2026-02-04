@@ -1,0 +1,61 @@
+// examples/Φ/phi_binding to K with contract.ds
+// Φ-Regime Example 8: Φ -> K binding with contract
+//
+// Demonstrates exporting an admissibility-validated value from Φ-regime
+// into a K-regime orchestrator via an explicit bind + contract.
+//
+// This file contains:
+//  - a Φ process that establishes admissibility and returns a value
+//  - a K process that consumes the value and performs explicit effects
+//  - an explicit binding contract governing the cross-regime interaction
+
+forge Examples {
+
+    shape Candidate {
+        x: i32;
+    }
+
+    // -----------------------------
+    // Φ-regime: admissibility provider
+    // -----------------------------
+    proc Φ::admissible_value(c: Candidate) -> i32 {
+        // Admissibility condition
+        constrain c.x > 0;
+
+        // Witness construction
+        prove w from c;
+
+        // Optional irreversible commit point justified by witness
+        seal w;
+
+        // Return a classical value whose validity is established by admissibility
+        return c.x;
+    }
+
+    // -----------------------------
+    // K-regime: consume admissibility
+    // -----------------------------
+    proc K::consume_phi_value() uses Console(device="stdout") -> i32 {
+        let c = Candidate { x: 12 };
+
+        // Cross-regime call (mediated by binding below)
+        let v = admissible_value(c);
+
+        // Explicit effects after admissibility has been established
+        emit "Φ-VALUE";
+        emit v;
+
+        return v;
+    }
+
+    // -----------------------
+    // Cross-regime binding
+    // -----------------------
+    bind Φ::admissible_value -> K::consume_phi_value
+    contract {
+        witness_transfer == true;
+        effects_allowed == true;
+        latency_us < 5000;
+    }
+
+}
