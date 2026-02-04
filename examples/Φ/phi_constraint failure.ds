@@ -1,0 +1,29 @@
+// examples/Φ/phi_constraint failure.ds
+// Φ-Regime Example 3: Constraint failure (no admissible configuration)
+//
+// Demonstrates admissibility failure as a *valid semantic outcome*.
+// There is no configuration that satisfies the declared constraints,
+// so execution terminates without results and without effects.
+
+forge Examples {
+
+    shape Candidate {
+        x: i32;
+    }
+
+    // This process declares mutually incompatible constraints.
+    // No admissible configuration exists.
+    proc Φ::constraint_failure(c: Candidate) -> i32 {
+        // Incompatible admissibility conditions
+        constrain c.x > 10;
+        constrain c.x < 0;
+
+        // No witness can be constructed here.
+        // Admissibility fails deterministically.
+        // No effects occur and no value is produced.
+
+        // (No return is reachable under admissibility.)
+        return c.x;
+    }
+
+}
