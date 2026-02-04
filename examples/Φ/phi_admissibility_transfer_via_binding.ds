@@ -1,0 +1,50 @@
+// examples/Φ/phi_admissibility transfer via binding.ds
+// Φ-Regime Example 5: Admissibility transfer via binding
+//
+// Demonstrates that admissibility established in a Φ-regime process
+// can be transferred across a binding boundary and relied upon
+// by another process, without re-solving the constraints.
+
+forge Examples {
+
+    shape Candidate {
+        x: i32;
+    }
+
+    shape PhiValue {
+        value: i32;
+    }
+
+    // -----------------------------
+    // Φ-regime: establish admissibility
+    // -----------------------------
+    proc Φ::establish_admissible(c: Candidate) -> PhiValue {
+        // Declare admissibility condition
+        constrain c.x >= 10;
+
+        // Produce a witness for admissibility
+        prove w from c;
+
+        // No effects here; only admissibility is established
+        return PhiValue { value: c.x };
+    }
+
+    // -----------------------------
+    // Φ-regime: consume admissibility
+    // -----------------------------
+    proc Φ::consume_admissible(v: PhiValue) -> i32 {
+        // This process relies on the admissibility already established
+        // by the bound process. No additional constraints are required.
+        return v.value;
+    }
+
+    // -----------------------
+    // Φ → Φ binding
+    // -----------------------
+    bind Φ::consume_admissible -> Φ::establish_admissible
+    contract {
+        witness_transfer == true;
+        effects_allowed == false;
+    }
+
+}
