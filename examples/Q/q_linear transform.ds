@@ -1,0 +1,23 @@
+// examples/Q/q_linear transform.ds
+// Q-Regime Example 2: Linear transform (consume -> produce)
+//
+// Demonstrates a minimal Q-regime transformation that:
+//  - consumes a linear input exactly once,
+//  - produces a new linear output,
+//  - performs no effects,
+//  - does not copy or discard linear state.
+
+forge Examples {
+
+    shape QState {
+        id: i64;
+    }
+
+    // Consumes q and returns a new QState derived deterministically from it.
+    // This models a "transform" without introducing additional quantum semantics in v0.1.
+    proc Q::linear_transform(q: QState) -> QState linear {
+        let new_id = q.id + 1;
+        return QState { id: new_id };
+    }
+
+}
