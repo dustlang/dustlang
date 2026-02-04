@@ -1,0 +1,33 @@
+// examples/Φ/phi_multiple constraints single witness.ds
+// Φ-Regime Example 2: Multiple constraints, single witness
+//
+// Demonstrates that multiple constraints can jointly define admissibility,
+// and that a single witness may attest to the satisfiability of the combined set.
+
+forge Examples {
+
+    shape Candidate {
+        x: i32;
+        y: i32;
+    }
+
+    shape PhiResult {
+        sum: i32;
+        ok: bool;
+    }
+
+    proc Φ::multiple_constraints_single_witness(c: Candidate) -> PhiResult {
+        // Joint admissibility conditions
+        constrain c.x > 0;
+        constrain c.y > 0;
+        constrain (c.x + c.y) > 10;
+
+        // One witness for the combined admissibility set
+        prove w from c;
+
+        // Return a deterministic derived value (still governed by admissibility)
+        let s = c.x + c.y;
+        return PhiResult { sum: s, ok: true };
+    }
+
+}
