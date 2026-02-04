@@ -1,0 +1,44 @@
+// examples/K/k_contract violation.ds
+// Demonstrates a deterministic contract violation.
+// The contract declares an unrealistic latency bound. If the bound cannot be met,
+// the binding MUST NOT be exercised and no effects may occur.
+//
+// This file contains:
+//  - a K process that attempts to invoke a target process through a binding
+//  - a binding contract that is intentionally strict
+//  - explicit effects that MUST NOT occur if the contract cannot be satisfied
+
+forge Examples {
+
+    // Target process (same regime, simple deterministic computation)
+    proc K::work_unit() -> i32 {
+        let a = 100;
+        let b = 23;
+        let r = a + b; // 123
+        return r;
+    }
+
+    // Caller process attempts to use the binding below.
+    proc K::contract_violation_example() uses Console(device="stdout") -> i32 {
+
+        // If the contract is violated, execution MUST fail deterministically
+        // before any effects occur.
+        let r = work_unit();
+
+        // These effects MUST NOT occur if contract enforcement fails.
+        emit "CONTRACT-SATISFIED";
+        emit r;
+
+        return r;
+    }
+
+    // Binding with an intentionally unrealistic constraint.
+    // A conforming implementation MUST enforce this contract.
+    // If it cannot be met, the binding MUST NOT be exercised.
+    bind K::contract_violation_example -> K::work_unit
+    contract {
+        latency_us < 1;
+        effects_allowed == true;
+    }
+
+}
