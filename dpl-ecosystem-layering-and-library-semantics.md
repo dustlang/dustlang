@@ -1,5 +1,3 @@
-# File: dpl-ecosystem-layering-and-library-semantics.md
-
 # Ecosystem Layering and Library Semantics in DPL
 ## How Abstractions Scale Without Creating Shadow Meaning
 
