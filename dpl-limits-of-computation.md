@@ -1,5 +1,3 @@
-# File: dpl-limits-of-computation.md
-
 # The Limits of Computation in DPL
 ## What Is Intentionally Inexpressible
 
