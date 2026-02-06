@@ -1,5 +1,3 @@
-# File: dpl-semantic-equivalence-and-identity.md
-
 # Semantic Equivalence and Program Identity in DPL
 ## When Two Programs Are the Same—and When They Are Not
 
