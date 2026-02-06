@@ -1,5 +1,3 @@
-# File: dpl-corpus-index-and-reading-order.md
-
 # The DPL Corpus Index and Reading Order
 ## A Map of Meaning, Authority, and Dependency
 
