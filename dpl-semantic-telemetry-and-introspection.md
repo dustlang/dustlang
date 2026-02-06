@@ -1,5 +1,3 @@
-# File: dpl-semantic-telemetry-and-introspection.md
-
 # Semantic Telemetry and Introspection in DPL
 ## What Tools May Observe Without Breaking Meaning
 
