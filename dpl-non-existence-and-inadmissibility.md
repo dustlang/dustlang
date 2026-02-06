@@ -1,5 +1,3 @@
-# File: dpl-non-existence-and-inadmissibility.md
-
 # Non-Existence and Inadmissibility in DPL
 ## When Correct Programs Do Not Exist
 
