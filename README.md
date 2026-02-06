@@ -72,7 +72,7 @@ These principles are enforced structurally, not by convention.
 dustlang/
 ├── README.md                     # This file
 ├── LICENSE                       # Dust Open Source License (DOSL)
-├── DPL_White_Paper.md            # Vision & positioning (non-normative)
+├── dpl-white_paper.md            # Vision & positioning (non-normative)
 │
 ├── spec/                         # Canonical language specification (LAW)
 │   ├── README.md
