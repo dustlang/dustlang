@@ -1,5 +1,3 @@
-# File: dpl-executable-specifications-and-conformance.md
-
 # Executable Specifications and Conformance in DPL
 ## When the Specification Is the Program
 
