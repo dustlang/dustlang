@@ -1,5 +1,3 @@
-# File: dpl-governance-and-semantic-stability.md
-
 # Governance and Semantic Stability in DPL
 ## How Meaning Is Preserved Over Time
 
