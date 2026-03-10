@@ -167,7 +167,88 @@ This version establishes the complete foundational definition of the Dust Progra
 
 ---
 
-## C.3 Post-v0.1 Notes
+## C.3 Version v0.2 — Systems Programming Release
+
+**Status:** Complete Specification  
+**Date:** March 2026
+
+This version adds complete systems programming capabilities to DPL while maintaining full backward compatibility with v0.1.
+
+---
+
+### C.3.1 New Keywords (v0.2)
+
+Added the following reserved keywords:
+- `alloc`, `free` - Memory management
+- `spawn`, `join` - Concurrency
+- `mutex_new`, `mutex_lock`, `mutex_unlock` - Synchronization
+- `open`, `read`, `write`, `close` - File I/O
+- `io_read`, `io_write`, `mmio_read`, `mmio_write` - Device I/O
+- `unsafe` - Unsafe operations
+
+---
+
+### C.3.2 Grammar Extensions (v0.2)
+
+Extended grammar productions:
+- Added `ALLOC_STATEMENT`, `FREE_STATEMENT`
+- Added `SPAWN_STATEMENT`, `JOIN_STATEMENT`, `MUTEX_STATEMENT`
+- Added `IO_STATEMENT`, `UNSAFE_BLOCK`
+- Added new type forms: `Mem`, `Thread<T>`, `Mutex`, `File`, `Port`, `Device`
+
+---
+
+### C.3.3 K-Regime Systems Extensions (v0.2)
+
+Extended K-regime with:
+- **Memory Effects**: `alloc(size) -> Mem`, `free(mem: Mem)`
+- **Concurrency**: `spawn(f, seed?) -> Thread<T>`, `join(thread) -> T`
+- **Synchronization**: `mutex_new() -> Mutex`, `mutex_lock(m)`, `mutex_unlock(m)`
+- **File I/O**: `open(path, mode) -> File`, `read`, `write`, `close`
+- **Device I/O**: `io_read`, `io_write`, `mmio_read`, `mmio_write`
+- **Unsafe Operations**: `unsafe { ... }` blocks
+
+---
+
+### C.3.4 Type System Extensions (v0.2)
+
+Added new resource types:
+- `Mem` - Memory handle
+- `Thread<T>` - Thread handle (generic)
+- `Mutex` - Synchronization primitive
+- `File` - File handle
+- `Port` - I/O port
+- `Device` - Hardware device
+
+---
+
+### C.3.5 Effect System Extensions (v0.2)
+
+Added new effects:
+- Memory effects: allocation, deallocation
+- Concurrency effects: thread spawn, join
+- I/O effects: file and device operations
+
+---
+
+### C.3.6 Deterministic Scheduling (v0.2)
+
+Added seed-based deterministic scheduler:
+- Scheduler seed inherited by spawned threads
+- Same seed = same thread interleaving
+- Enables reproducible concurrent execution
+
+---
+
+### C.3.7 Specification Structure (v0.2)
+
+- Created unified specification document: `dpl-spec-v0.2.md`
+- Marked v0.1 as legacy
+- Maintained drafts directory for historical reference
+
+---
+
+## C.4 Post-v0.1 Notes
 
 Future versions of this change log will:
 

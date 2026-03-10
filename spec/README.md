@@ -1,8 +1,8 @@
 # Dust Programming Language Specification
 
 **Language:** Dust Programming Language (DPL)  
-**Current Spec Version:** v0.1  
-**Status:** Foundational Specification  
+**Current Spec Version:** v0.2 (Complete)  
+**Status:** Systems Programming Specification  
 **License:** Dust Open Source License (DOSL)
 
 ---
@@ -18,6 +18,32 @@ The specification defines:
 - and the requirements for conforming implementations.
 
 All content in this directory is considered **normative** unless explicitly stated otherwise.
+
+---
+
+## Current Specification: v0.2
+
+**File:** `dpl-spec-v0.2.md`
+
+This is the **complete and authoritative specification** for DPL v0.2, including all systems programming extensions:
+
+### v0.2 Features
+
+- **Memory Management**: `alloc`, `free` with Mem type
+- **Concurrency**: `spawn`, `join`, `Thread<T>`, `mutex_new`, `mutex_lock`, `mutex_unlock`
+- **I/O Operations**: `open`, `read`, `write`, `close`, `io_read`, `io_write`, `mmio_read`, `mmio_write`
+- **Unsafe Operations**: `unsafe` blocks
+- **Resource Types**: `Mem`, `Thread<T>`, `Mutex`, `File`, `Port`, `Device`
+- **Deterministic Scheduling**: Seed-based thread scheduling
+
+### v0.1 Core (also included)
+
+- Regime model (K, Q, Φ)
+- Shape declarations
+- Process declarations
+- Effect system (emit, observe, seal)
+- Constraint system
+- Binding and contracts
 
 ---
 
@@ -54,33 +80,38 @@ The specification is organized as follows:
 
 spec/
 ├── README.md                     # This file
-├── dpl-spec-v0.1.md              # Front matter and master table of contents
+├── dpl-spec-v0.2.md             # Complete v0.2 specification (AUTHORITATIVE)
+├── dpl-spec-v0.1.md             # Legacy v0.1 specification
 │
 ├── 01-introduction.md            # §1 Introduction
-├── 02-lexical-structure.md       # §2 Lexical Structure
-├── 03-grammar.md                 # §3 Grammar
-├── 04-regime-model.md            # §4 Regime Model
-├── 05-type-system.md             # §5 Type System
-├── 06-effects.md                 # §6 Effects and Irreversibility
-├── 07-constraints.md             # §7 Constraints and Admissibility
-├── 08-processes.md               # §8 Processes and Execution
-├── 09-time-concurrency.md        # §9 Time and Concurrency
-├── 10-binding-contracts.md       # §10 Binding and Contracts
-├── 11-errors.md                  # §11 Error and Failure Model
-├── 12-dir.md                     # §12 Dust Intermediate Representation (DIR)
-├── 13-conformance.md             # §13 Conformance Requirements
-├── 14-versioning.md              # §14 Versioning and Evolution
-├── 15-security.md                # §15 Security and Safety Considerations
+├── 02-lexical-structure.md      # §2 Lexical Structure
+├── 03-grammar.md               # §3 Grammar
+├── 04-regime-model.md           # §4 Regime Model
+├── 05-type-system.md            # §5 Type System
+├── 06-effects.md                # §6 Effects and Irreversibility
+├── 07-constraints.md           # §7 Constraints and Admissibility
+├── 08-processes.md              # §8 Processes and Execution
+├── 09-time-concurrency.md       # §9 Time and Concurrency
+├── 10-binding-contracts.md      # §10 Binding and Contracts
+├── 11-errors.md                 # §11 Error and Failure Model
+├── 12-dir.md                    # §12 Dust Intermediate Representation (DIR)
+├── 13-conformance.md            # §13 Conformance Requirements
+├── 14-versioning.md             # §14 Versioning and Evolution
+├── 15-security.md               # §15 Security and Safety Considerations
 │
 ├── glossary.md                   # Shared terminology
-├── rationale.md                  # Non-normative design rationale
-└── changelog.md                  # Specification change log
+├── rationale.md                 # Non-normative design rationale
+├── changelog.md                 # Specification change log
+└── drafts/
+    └── v0.2/
+        └── spec/
+            └── # Draft additions (superseded by dpl-spec-v0.2.md)
 
 ---
 
 ## Versioning Model
 
-- The **language specification** has a version number (e.g., v0.1).
+- The **language specification** has a version number (e.g., v0.2).
 - Individual sections may evolve internally without changing the overall spec version.
 - The spec version increments only when a change introduces breaking semantic differences.
 
@@ -129,6 +160,3 @@ Semantics may evolve until the language reaches v1.0.
 ---
 
 © 2026 Dust LLC
-
-
-⸻
